@@ -33,7 +33,7 @@ class LocalMarketDataToolbox:
         """
         file_path = self._tick_file_path(symbol, trade_date)
         file_path.parent.mkdir(parents=True, exist_ok=True)
-        ticks.to_csv(file_path, index=False)
+        ticks.to_csv(file_path, index=False, encoding="utf-8-sig")
         return file_path
 
     def load_ticks(self, symbol: str, trade_date: str) -> pd.DataFrame:

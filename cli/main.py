@@ -584,7 +584,7 @@ def get_user_selections():
         Any: 当前查询结果。
     """
     # 展示 ASCII 艺术欢迎信息
-    with open(Path(__file__).parent / "static" / "welcome.txt", "r") as f:
+    with open(Path(__file__).parent / "static" / "welcome.txt", "r", encoding="utf-8") as f:
         welcome_ascii = f.read()
 
     # Create welcome box content
@@ -948,19 +948,19 @@ def save_report_to_disk(final_state, ticker: str, save_path: Path):
     analyst_parts = []
     if final_state.get("final_market_report"):
         analysts_dir.mkdir(exist_ok=True)
-        (analysts_dir / "market_report.md").write_text(final_state["final_market_report"])
+        (analysts_dir / "market_report.md").write_text(final_state["final_market_report"], encoding="utf-8")
         analyst_parts.append(("Market Analyst", final_state["final_market_report"]))
     if final_state.get("final_sentiment_report"):
         analysts_dir.mkdir(exist_ok=True)
-        (analysts_dir / "sentiment_report.md").write_text(final_state["final_sentiment_report"])
+        (analysts_dir / "sentiment_report.md").write_text(final_state["final_sentiment_report"], encoding="utf-8")
         analyst_parts.append(("Social Analyst", final_state["final_sentiment_report"]))
     if final_state.get("final_news_report"):
         analysts_dir.mkdir(exist_ok=True)
-        (analysts_dir / "news_report.md").write_text(final_state["final_news_report"])
+        (analysts_dir / "news_report.md").write_text(final_state["final_news_report"], encoding="utf-8")
         analyst_parts.append(("News Analyst", final_state["final_news_report"]))
     if final_state.get("final_fundamentals_report"):
         analysts_dir.mkdir(exist_ok=True)
-        (analysts_dir / "fundamentals_report.md").write_text(final_state["final_fundamentals_report"])
+        (analysts_dir / "fundamentals_report.md").write_text(final_state["final_fundamentals_report"], encoding="utf-8")
         analyst_parts.append(("Fundamentals Analyst", final_state["final_fundamentals_report"]))
     if analyst_parts:
         content = "\n\n".join(f"### {name}\n{text}" for name, text in analyst_parts)
@@ -969,23 +969,23 @@ def save_report_to_disk(final_state, ticker: str, save_path: Path):
     if final_state.get("final_investment_plan_report"):
         research_dir = save_path / "2_research"
         research_dir.mkdir(exist_ok=True)
-        (research_dir / "investment_plan.md").write_text(final_state["final_investment_plan_report"])
+        (research_dir / "investment_plan.md").write_text(final_state["final_investment_plan_report"], encoding="utf-8")
         sections.append(f"## II. Research Team Decision\n\n{final_state['final_investment_plan_report']}")
 
     if final_state.get("final_trader_investment_plan_report"):
         trading_dir = save_path / "3_trading"
         trading_dir.mkdir(exist_ok=True)
-        (trading_dir / "trader_investment_plan_report.md").write_text(final_state["final_trader_investment_plan_report"])
+        (trading_dir / "trader_investment_plan_report.md").write_text(final_state["final_trader_investment_plan_report"], encoding="utf-8")
         sections.append(f"## III. Trading Team Plan\n\n{final_state['final_trader_investment_plan_report']}")
 
     if final_state.get("final_trade_decision_report"):
         portfolio_dir = save_path / "4_portfolio"
         portfolio_dir.mkdir(exist_ok=True)
-        (portfolio_dir / "final_trade_decision_report.md").write_text(final_state["final_trade_decision_report"])
+        (portfolio_dir / "final_trade_decision_report.md").write_text(final_state["final_trade_decision_report"], encoding="utf-8")
         sections.append(f"## IV. Portfolio Management Decision\n\n{final_state['final_trade_decision_report']}")
 
     header = f"# Trading Analysis Report: {ticker}\n\nGenerated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-    (save_path / "complete_report.md").write_text(header + "\n\n".join(sections))
+    (save_path / "complete_report.md").write_text(header + "\n\n".join(sections), encoding="utf-8")
     return save_path / "complete_report.md"
 
 
@@ -1290,7 +1290,7 @@ def run_analysis():
             func(*args, **kwargs)
             timestamp, message_type, content = obj.messages[-1]
             content = content.replace("\n", " ")  # 将换行替换为空格
-            with open(log_file, "a") as f:
+            with open(log_file, "a", encoding="utf-8") as f:
                 f.write(f"{timestamp} [{message_type}] {content}\n")
         return wrapper
     
@@ -1321,7 +1321,7 @@ def run_analysis():
             func(*args, **kwargs)
             timestamp, tool_name, args = obj.tool_calls[-1]
             args_str = ", ".join(f"{k}={v}" for k, v in args.items())
-            with open(log_file, "a") as f:
+            with open(log_file, "a", encoding="utf-8") as f:
                 f.write(f"{timestamp} [Tool Call] {tool_name}({args_str})\n")
         return wrapper
 
@@ -1354,7 +1354,7 @@ def run_analysis():
                 content = obj.report_sections[section_name]
                 if content:
                     text = "\n".join(str(item) for item in content) if isinstance(content, list) else content
-                    with open(report_dir / f"{section_name}.md", "w") as f:
+                    with open(report_dir / f"{section_name}.md", "w", encoding="utf-8") as f:
                         f.write(text)
         return wrapper
 

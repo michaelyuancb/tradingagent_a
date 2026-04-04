@@ -200,7 +200,7 @@ def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
                         adjust="qfq",
                     )
                 )
-        data.to_csv(data_file, index=False)
+        data.to_csv(data_file, index=False, encoding="utf-8-sig")
 
     data = _clean_dataframe(data)
     data = data[data["Date"] <= curr_date_dt]

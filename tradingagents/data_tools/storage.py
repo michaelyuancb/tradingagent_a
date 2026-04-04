@@ -216,7 +216,7 @@ class LocalArtifactStore:
             None: 无返回值。
         """
         if payload_format == "csv":
-            value.to_csv(payload_path, index=False)
+            value.to_csv(payload_path, index=False, encoding="utf-8-sig")
             return
         if payload_format == "json":
             payload_path.write_text(

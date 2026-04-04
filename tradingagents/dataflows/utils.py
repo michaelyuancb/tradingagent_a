@@ -19,7 +19,7 @@ def save_output(data: pd.DataFrame, tag: str, save_path: SavePathType = None) ->
         None: 无返回值。
     """
     if save_path:
-        data.to_csv(save_path)
+        data.to_csv(save_path, encoding="utf-8-sig")
         print(f"{tag} saved to {save_path}")
 
 
