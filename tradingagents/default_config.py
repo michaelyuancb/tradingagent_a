@@ -48,6 +48,8 @@ DEFAULT_CONFIG = {
     "max_debate_rounds": 2,
     "max_risk_discuss_rounds": 1,
     "max_recur_limit": 100,
+    # 超时配置（秒）
+    "timeout": 180,
     # 数据供应商配置
     # 类别级配置（该类别下工具默认沿用）
     "data_vendors": {

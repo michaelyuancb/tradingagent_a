@@ -176,6 +176,11 @@ class TradingAgentsGraph:
             if effort:
                 kwargs["effort"] = effort
 
+        # 所有提供方统一注入超时配置
+        timeout = self.config.get("timeout")
+        if timeout is not None:
+            kwargs["timeout"] = timeout
+
         return kwargs
 
     def _create_tool_nodes(self) -> Dict[str, ToolNode]:
