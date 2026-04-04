@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # Python
 __pycache__/
@@ -9,14 +10,31 @@ __pycache__/
 *$py.class
 *.so
 .Python
+
+# Packaging / build
 *.egg-info/
+.eggs/
+pip-wheel-metadata/
+build/
 dist/
-build/lib/
 
 # Virtual environments
 .venv/
 venv/
+env/
 ENV/
+
+# Test / tooling cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Runtime outputs
+results/
+*.log
 
 # IDE
 .vscode/
@@ -27,7 +45,3 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
-
-# Data
-tradingagents/local_data/data_tools/cache/
-*.log
